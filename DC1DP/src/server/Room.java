@@ -78,7 +78,7 @@ public class Room {
 	
 	public void enterRoom(Player p, Direction d){
 		for(Player otherplayer : _players){
-			otherplayer.alert(p.getName() + " has entered the room!");
+			otherplayer.alert(p.getName() + " has entered the room from the " + d + "!");
 		}
 		
 		_players.add(p);
