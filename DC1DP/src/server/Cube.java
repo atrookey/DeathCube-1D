@@ -115,7 +115,7 @@ public class Cube {
 			r = _cube[x][y][z];
 		}
 		
-		r.enterRoom(p);
+		r.placePlayer(p);
 		
 	}
 

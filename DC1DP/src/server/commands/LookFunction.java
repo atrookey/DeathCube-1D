@@ -5,6 +5,8 @@ import server.Room;
 
 public class LookFunction implements CommandFunction{
 
+	public static String COMMAND = "LOOK";
+	
 	@Override
 	public void performCommand(Player p, String[] args) {
 		// TODO Auto-generated method stub
@@ -21,6 +23,18 @@ public class LookFunction implements CommandFunction{
 		}
 		
 		
+	}
+
+	@Override
+	public String getCommandName() {
+		// TODO Auto-generated method stub
+		return COMMAND;
+	}
+
+	@Override
+	public String getHelp() {
+		// TODO Auto-generated method stub
+		return "Type LOOK to view your surroundings.";
 	}
 
 }

@@ -76,9 +76,9 @@ public class Room {
 		return _description;
 	}
 	
-	public void enterRoom(Player p){
+	public void enterRoom(Player p, Direction d){
 		for(Player otherplayer : _players){
-			Server.getServer().notifyPlayer(otherplayer, p.getName() + " has entered the room!");
+			otherplayer.alert(p.getName() + " has entered the room!");
 		}
 		
 		_players.add(p);
@@ -91,7 +91,7 @@ public class Room {
 		p.appendToLog("You enter a " + _description + " room.\n");
 	}
 	
-	public void exitRoom(Player p){
+	public void exitRoom(Player p, Direction d){
 		
 		if(_players.contains(p)){
 			_players.remove(p);
@@ -101,7 +101,7 @@ public class Room {
 			}
 			
 			for(Player otherplayer : _players){
-				Server.getServer().notifyPlayer(otherplayer, p.getName() + " has exited the room!");
+				otherplayer.alert(p.getName() + " has exited the room through the " + d + " door.");
 			}
 			
 			System.out.println(p.getName() + " has exited!");
@@ -109,6 +109,12 @@ public class Room {
 		}else{
 			System.err.println("Invalid!");
 		}
+	}
+	
+	public void placePlayer(Player p){
+		_players.add(p);
+		p.setCurrentRoom(this);
+		p.alert("You wake up in a " + _description + " room.");
 	}
 	
 	public ArrayList<Player> getPlayersInRoom(){

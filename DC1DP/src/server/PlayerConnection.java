@@ -43,7 +43,7 @@ public class PlayerConnection implements Runnable {
 		_oos.writeObject(new ServerPacket("OKAY", null));
 		System.out.println("Object written!");
 
-		p = new Player(cp.getID());
+		p = new Player(cp.getID(),this);
 		
 		_server.registerPlayer(p, this);
 		

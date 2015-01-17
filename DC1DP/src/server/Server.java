@@ -9,7 +9,9 @@ import java.util.Map;
 
 import server.commands.CommandFunction;
 import server.commands.GoFunction;
+import server.commands.HelpFunction;
 import server.commands.LookFunction;
+import server.commands.SayFunction;
 import shared.ServerPacket;
 
 public class Server {
@@ -140,8 +142,10 @@ public class Server {
 	}
 
 	private void registerCommands(HashMap<String, CommandFunction> cmds) {
-		cmds.put("GO", new GoFunction());
-		cmds.put("LOOK", new LookFunction());
+		cmds.put(GoFunction.COMMAND, new GoFunction());
+		cmds.put(LookFunction.COMMAND, new LookFunction());
+		cmds.put(SayFunction.COMMAND, new SayFunction());
+		cmds.put(HelpFunction.COMMAND, new HelpFunction(cmds));
 	}
 	
 	public Cube getCube(){
