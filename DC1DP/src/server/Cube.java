@@ -142,20 +142,26 @@ public class Cube {
 		
 		Random r = new Random();
 
+		int counter = 0;
+		
 		for (int x = 0; x < _cube.length; x++) {
 			for (int y = 0; y < _cube[0].length; y++) {
 				for (int z = 0; z < _cube[0][0].length; z++) {
 					if (_cube[x][y][z] != null && r.nextInt(6) == 3) {
-						attemptShift(_cube[x][y][z], dir, x, y, z);
+						if(attemptShift(_cube[x][y][z], dir, x, y, z)){
+							counter++;
+						}
 					}
 				}
 			}
 		}
 		
 		connectRooms();
+		
+		System.out.println(counter + " rooms have moved!");
 	}
 
-	private void attemptShift(Room r, ArrayList<Direction> dirs, int x, int y,
+	private boolean attemptShift(Room r, ArrayList<Direction> dirs, int x, int y,
 			int z) {
 		Collections.shuffle(dirs);
 
@@ -209,13 +215,14 @@ public class Cube {
 					player.alert("You hear a loud rumbling and the ground seems to shake!");
 				}
 
-				break;
+				return true;
 			} catch (IndexOutOfBoundsException e) {
 				continue; // this is a lazy approach to checking indexes
 			}
 
 		}
 
+		return false;
 	}
 
 	/*
