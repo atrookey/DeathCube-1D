@@ -175,36 +175,48 @@ public class Cube {
 						_cube[x][y][z - 1] = r;
 						_cube[x][y][z] = null;
 						
+					}else{
+						continue;
 					}
 					break;
 				case east:
 					if (_cube[x + 1][y][z] == null) {
 						_cube[x + 1][y][z] = r;
 						_cube[x][y][z] = null;
+					}else{
+						continue;
 					}
 					break;
 				case north:
 					if (_cube[x][y + 1][z] == null) {
 						_cube[x][y + 1][z] = r;
 						_cube[x][y][z] = null;
+					}else{
+						continue;
 					}
 					break;
 				case south:
 					if (_cube[x][y - 1][z] == null) {
 						_cube[x][y - 1][z] = r;
 						_cube[x][y][z] = null;
+					}else{
+						continue;
 					}
 					break;
 				case up:
 					if (_cube[x][y][z + 1] == null) {
 						_cube[x][y][z + 1] = r;
 						_cube[x][y][z] = null;
+					}else{
+						continue;
 					}
 					break;
 				case west:
 					if (_cube[x - 1][y][z] == null) {
 						_cube[x - 1][y][z] = r;
 						_cube[x][y][z] = null;
+					}else{
+						continue;
 					}
 					break;
 				default:
