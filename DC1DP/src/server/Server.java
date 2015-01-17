@@ -5,12 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import server.commands.CommandFunction;
 import server.commands.GoFunction;
 import server.commands.HelpFunction;
 import server.commands.LookFunction;
+import server.commands.MapFunction;
 import server.commands.SayFunction;
 import shared.ServerPacket;
 
@@ -35,7 +35,7 @@ public class Server {
 
 		_lock = new Object();
 		
-		_cube = new Cube(2, 2, 2);
+		_cube = new Cube(5, 5, 5);
 
 		registerCommands(_commands);
 		
@@ -46,6 +46,11 @@ public class Server {
 
 	}
 
+	/**
+	 * 
+	 * @author ginonott
+	 * This class simply sits on a thread and listens for connections on it's port. It then creates player connections.
+	 */
 	private class ConnectionListener implements Runnable {
 
 		private Server _s;
@@ -145,6 +150,7 @@ public class Server {
 		cmds.put(GoFunction.COMMAND, new GoFunction());
 		cmds.put(LookFunction.COMMAND, new LookFunction());
 		cmds.put(SayFunction.COMMAND, new SayFunction());
+		cmds.put(MapFunction.COMMAND, new MapFunction());
 		cmds.put(HelpFunction.COMMAND, new HelpFunction(cmds));
 	}
 	

@@ -1,5 +1,9 @@
 package server;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 import server.Room.Direction;
@@ -120,7 +124,15 @@ public class Cube {
 	}
 
 	public void shiftRooms() {
-
+		Direction[] dirs = {Direction.north,Direction.south,Direction.west,Direction.east,Direction.up,Direction.down};
+		ArrayList<Direction> dir = new ArrayList<>();
+	
+	}
+	/*
+	 * This is only for testing!!
+	 */
+	public Room[][][] getCube(){
+		return _cube;
 	}
 
 }
