@@ -111,6 +111,32 @@ public class Room {
 		}
 	}
 	
+	public void disconnectAllRooms(){
+		if(north != null){
+			north.south = null;
+		}
+		
+		if(south != null){
+			south.north = null;
+		}
+		
+		if(east != null){
+			east.west = null;
+		}
+		
+		if(west != null){
+			west.east = null;
+		}
+		
+		if(up != null){
+			up.down = null;
+		}
+		
+		if(down != null){
+			down.up = null;
+		}
+	}
+	
 	public void placePlayer(Player p){
 		_players.add(p);
 		p.setCurrentRoom(this);

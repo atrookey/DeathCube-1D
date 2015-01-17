@@ -35,7 +35,7 @@ public class Server {
 
 		_lock = new Object();
 		
-		_cube = new Cube(5, 5, 5);
+		_cube = new Cube(3, 3, 3);
 
 		registerCommands(_commands);
 		
@@ -43,6 +43,9 @@ public class Server {
 
 		Thread t = new Thread(new ConnectionListener(this, port));
 		t.start();
+		
+		Thread t2 = new Thread(new CubeShifter());
+		t2.start();
 
 	}
 
@@ -100,6 +103,30 @@ public class Server {
 			}
 		}
 
+	}
+	
+	private class CubeShifter implements Runnable{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			while(true){
+				synchronized (_lock) {
+					System.out.println("Shifting rooms!");
+					_cube.shiftRooms();
+					System.out.println("Rooms shifted!");
+				}
+				
+				try {
+					//30 seconds
+					Thread.sleep(1000 * 30);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 
 	public void notifyPlayers(String notification) {
