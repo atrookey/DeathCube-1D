@@ -19,6 +19,8 @@ public class Player {
 	
 	//The connection that is serving this player. It allows for server communication.
 	private PlayerConnection _pc;
+	
+	
 
 	/** 
 	 * @param name the player's name
