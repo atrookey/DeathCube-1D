@@ -11,7 +11,20 @@ public class ServerPacket implements Serializable {
 	
 	private final String data;
 
+	/**
+	 * 
+	 * @param data the data to be sent to the player
+	 * @param ID i dunno really. Use the other constructor.
+	 * @deprecated
+	 */
 	public ServerPacket(String data, String ID) {
+		this(data);
+	}
+	
+	/**
+	 * @param data to be sent to the player. It is immutable.
+	 */
+	public ServerPacket(String data){
 		this.data = data;
 	}
 

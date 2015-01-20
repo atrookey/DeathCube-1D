@@ -14,9 +14,10 @@ public class ServerModule implements ServerInterface{
 
 	private ObjectOutputStream _oos;
 	private ObjectInputStream _ois;
+	private Socket s;
 	
 	public ServerModule(String addr, int port, String args) throws UnknownHostException, IOException, CouldNotConnect {
-		Socket s = new  Socket(addr, port);
+		s = new  Socket(addr, port);
 		
 		_oos = new ObjectOutputStream(s.getOutputStream());
 		
@@ -49,6 +50,29 @@ public class ServerModule implements ServerInterface{
 	public ServerPacket readFromServer() throws ClassNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		return (ServerPacket)_ois.readObject();
+	}
+	
+	public void cleanUp(){
+		try {
+			_oos.close();
+		} catch (IOException e) {
+			System.err.println("Could not close _oos!");
+			e.printStackTrace();
+		}
+		
+		try {
+			_ois.close();
+		} catch (IOException e) {
+			System.err.println("Could not close _ois!");
+			e.printStackTrace();
+		}
+		
+		try {
+			s.close();
+		} catch (IOException e) {
+			System.err.println("Could not close s!");
+			e.printStackTrace();
+		}
 	}
 
 }

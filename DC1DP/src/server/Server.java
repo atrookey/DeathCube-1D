@@ -23,13 +23,14 @@ public class Server {
 	
 	private Cube _cube;
 
+	//This lock is to make player actions synchronous and to eliminate any race conditions
 	private Object _lock;
 
-	private static Server _server;
 	
 	public Server(int port) throws IOException {
 		_connectedPlayers = new ArrayList<>();
 
+		//allows for player connection look up by player. Unused now?
 		_players = new HashMap<>();
 		_commands = new HashMap<>();
 
@@ -39,7 +40,6 @@ public class Server {
 
 		registerCommands(_commands);
 		
-		_server = this;
 
 		Thread t = new Thread(new ConnectionListener(this, port));
 		t.start();
@@ -65,9 +65,10 @@ public class Server {
 			p = port;
 		}
 
+		@SuppressWarnings("resource")
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+			// TODO: Change this from a while(true) to something else. ss needs to be cleaned up.
 			ServerSocket ss = null;
 			try {
 				ss = new ServerSocket(p);
@@ -105,12 +106,24 @@ public class Server {
 
 	}
 	
+	/**
+	 * There is a lot wrong with this.
+	 * A) This should be an action listener and plugged into
+	 * a TimerThread.
+	 * B)This should really just be in the cube class.
+	 * 
+	 * @author ginonott
+	 *
+	 *TODO: FIX THIS
+	 */
 	private class CubeShifter implements Runnable{
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+			
 			while(true){
+				//this ensures that players cannot move through rooms while
+				//the cube is in an inconsistent state.
 				synchronized (_lock) {
 					System.out.println("Shifting rooms!");
 					_cube.shiftRooms();
@@ -129,29 +142,30 @@ public class Server {
 		
 	}
 
+	/**
+	 * Notify all players.
+	 * 
+	 * @param notification the notification to be sent out to every player
+	 * currently connected to this server.
+	 */
 	public void notifyPlayers(String notification) {
 		for (PlayerConnection pc : _connectedPlayers) {
 			try {
-				pc.notifyPlayer(new ServerPacket(notification, null));
+				pc.notifyPlayer(new ServerPacket(notification));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.err.println("Could not send to player!");
 			}
 		}
 	}
-	
-	public void notifyPlayer(Player p,String s){
-		if(_players.containsKey(p)){
-			try {
-				_players.get(p).notifyPlayer(new ServerPacket(s,null));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 
+	/**
+	 * Parse the user's input. Perhaps this should not be in the server class
+	 * and instead in the player connection class?
+	 * 
+	 * @param input the input from player
+	 * @param p the player it originated from
+	 */
 	public void parseInput(String input, Player p) {
 		synchronized (_lock) {
 			input = input.toUpperCase();
@@ -169,23 +183,33 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Register a player into the server. Should look to see if a player with that name is already
+	 * taken but whatever. Later.
+	 * 
+	 * @param p the player to be logged on.
+	 * @param pc the connection that is serving this player.
+	 */
 	public void registerPlayer(Player p, PlayerConnection pc) {
 		_players.put(p, pc);
 	}
 
+	/**
+	 * Bind commands to a map. This allows them to be easily called.
+	 * @param cmds
+	 */
 	private void registerCommands(HashMap<String, CommandFunction> cmds) {
 		cmds.put(GoFunction.COMMAND, new GoFunction());
 		cmds.put(LookFunction.COMMAND, new LookFunction());
 		cmds.put(SayFunction.COMMAND, new SayFunction());
-		cmds.put(MapFunction.COMMAND, new MapFunction());
+		cmds.put(MapFunction.COMMAND, new MapFunction(this));
 		cmds.put(HelpFunction.COMMAND, new HelpFunction(cmds));
 	}
 	
+	/**
+	 * @return this server's cube.
+	 */
 	public Cube getCube(){
 		return _cube;
-	}
-
-	public static Server getServer(){
-		return _server;
 	}
 }

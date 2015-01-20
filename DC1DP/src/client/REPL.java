@@ -15,6 +15,7 @@ public class REPL implements Runnable{
 	
 	@Override
 	public void run() {
+		//bind to the console input
 		Scanner scanner = new Scanner(System.in);
 		
 		String line = null;
@@ -28,14 +29,16 @@ public class REPL implements Runnable{
 				try {
 					_sm.writeToServer(new ClientPacket(line, "GINO"));
 				} catch (IOException e ) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("> Error!");
+					System.out.println("Could not write to the server!!");
+					System.exit(-1);
 				}
 			}
 		}
 		
+		//clean up our resources like a good program :-)
 		scanner.close();
+		_sm.cleanUp();
+		System.exit(0);
 	}
 
 }

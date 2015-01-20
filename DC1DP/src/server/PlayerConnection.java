@@ -17,8 +17,15 @@ public class PlayerConnection implements Runnable {
 	
 	private Player p;
 
+	/**
+	 * Tries to establish a communication between the player.
+	 * 
+	 * @param s the socket the player is connecting on.
+	 * @param serv
+	 * @throws IOException
+	 */
 	public PlayerConnection(Socket s, Server serv) throws IOException {
-		// TODO Auto-generated constructor stub
+		
 		_socket = s;
 		_server = serv;
 																																																
@@ -40,7 +47,7 @@ public class PlayerConnection implements Runnable {
 		
 		System.out.println("Writing out...!");
 		_oos = new ObjectOutputStream(s.getOutputStream());
-		_oos.writeObject(new ServerPacket("OKAY", null));
+		_oos.writeObject(new ServerPacket("OKAY"));
 		System.out.println("Object written!");
 
 		p = new Player(cp.getID(),this);
@@ -63,7 +70,7 @@ public class PlayerConnection implements Runnable {
 				ClientPacket cp = (ClientPacket) _ois.readObject();
 				_server.parseInput(cp.getData(), p);
 				String s = p.retrieveLog();
-				_oos.writeObject(new ServerPacket(s, null));
+				_oos.writeObject(new ServerPacket(s));
 				_oos.flush();
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
@@ -72,6 +79,33 @@ public class PlayerConnection implements Runnable {
 			}
 
 		}
+		
+		//clean up
+		try {
+			_oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Could not close _oos!");
+		}
+		
+		try {
+			_ois.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Could not close _ois!");
+		}
+		
+		try {
+			_socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Could not close _socket!");
+		}
+		
+		
 	}
 
 }

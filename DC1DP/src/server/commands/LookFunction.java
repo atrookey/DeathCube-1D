@@ -1,7 +1,6 @@
 package server.commands;
 
 import server.Player;
-import server.Room;
 
 public class LookFunction implements CommandFunction{
 
@@ -9,7 +8,6 @@ public class LookFunction implements CommandFunction{
 	
 	@Override
 	public void performCommand(Player p, String[] args) {
-		// TODO Auto-generated method stub
 		p.appendToLog("You are in a " + p.getCurrentRoom().getDescription() + " room.");
 		
 		if(p.getCurrentRoom().getPlayersInRoom().size() > 1){

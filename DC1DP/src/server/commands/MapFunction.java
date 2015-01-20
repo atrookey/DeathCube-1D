@@ -7,11 +7,16 @@ import server.Server;
 public class MapFunction implements CommandFunction {
 
 	public static String COMMAND = "MAP";
+	
+	private Server _s;
+	
+	public MapFunction(Server s) {
+		_s = s;
+	}
 
 	@Override
 	public void performCommand(Player p, String[] args) {
-		// TODO Auto-generated method stub
-		Room[][][] cube = Server.getServer().getCube().getCube();
+		final Room[][][] cube = _s.getCube().getCube();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -49,7 +54,7 @@ public class MapFunction implements CommandFunction {
 	@Override
 	public String getHelp() {
 		// TODO Auto-generated method stub
-		return "Type MAP. This is for dev only.";
+		return "Type MAP. This is for (dev?) only.";
 	}
 
 }
