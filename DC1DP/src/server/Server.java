@@ -12,6 +12,9 @@ import server.commands.HelpFunction;
 import server.commands.LookFunction;
 import server.commands.MapFunction;
 import server.commands.SayFunction;
+import server.cube.Cube;
+import server.player.Player;
+import server.player.PlayerConnection;
 import shared.ServerPacket;
 
 public class Server {

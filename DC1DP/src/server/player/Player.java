@@ -1,7 +1,8 @@
-package server;
+package server.player;
 
 import java.io.IOException;
 
+import server.cube.Room;
 import shared.ServerPacket;
 
 public class Player {

@@ -1,10 +1,11 @@
-package server;
+package server.cube;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import server.Room.Direction;
+import server.cube.Room.Direction;
+import server.player.Player;
 
 public class Cube {
 	/*

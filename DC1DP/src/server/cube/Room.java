@@ -1,7 +1,8 @@
-package server;
+package server.cube;
 
 import java.util.ArrayList;
 
+import server.player.Player;
 import server.room.roomlisteners.OnEnterListener;
 import server.room.roomlisteners.OnExitListener;
 
@@ -11,6 +12,7 @@ public class Room {
 		north, south, east, west, up, down;
 	}
 
+	//doors to other rooms
 	private Room north, south, east, west, up, down;
 
 	private ArrayList<Player> _players;

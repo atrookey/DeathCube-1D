@@ -1,8 +1,8 @@
 package server.commands;
 
-import server.Player;
-import server.Room;
 import server.Server;
+import server.cube.Room;
+import server.player.Player;
 
 public class MapFunction implements CommandFunction {
 

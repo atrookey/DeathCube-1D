@@ -1,6 +1,6 @@
 package server.commands;
 
-import server.Player;
+import server.player.Player;
 
 public class SayFunction implements CommandFunction {
 

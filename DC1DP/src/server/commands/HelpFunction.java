@@ -2,7 +2,7 @@ package server.commands;
 
 import java.util.HashMap;
 
-import server.Player;
+import server.player.Player;
 
 public class HelpFunction implements CommandFunction{
 	
