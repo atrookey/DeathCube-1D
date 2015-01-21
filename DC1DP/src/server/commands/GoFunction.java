@@ -4,7 +4,7 @@ import server.cube.Room;
 import server.cube.Room.Direction;
 import server.player.Player;
 
-public class GoFunction implements CommandFunction {
+public class GoFunction implements ICommand {
 
 	public static String COMMAND = "GO";
 

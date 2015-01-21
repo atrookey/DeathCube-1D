@@ -2,6 +2,7 @@ package server.cube;
 
 import java.util.ArrayList;
 
+import server.items.Item;
 import server.player.Player;
 import server.room.roomlisteners.OnEnterListener;
 import server.room.roomlisteners.OnExitListener;
@@ -20,12 +21,15 @@ public class Room {
 	private ArrayList<OnEnterListener> _onEntListeners;
 	private ArrayList<OnExitListener> _onExitListeners;
 	
+	private ArrayList<Item> _items;
+	
 	private String _description;
 
 	public Room(String desc) {
 		_description = desc;
 		
 		_players = new ArrayList<>();
+		_items = new ArrayList<>();
 		_onEntListeners = new ArrayList<>();
 		_onExitListeners = new ArrayList<>();
 	}
@@ -90,7 +94,7 @@ public class Room {
 		}
 		
 		p.setCurrentRoom(this);
-		p.appendToLog("You enter a " + _description + " room.\n");
+		p.appendToLog("You enter a " + _description + " room.");
 	}
 	
 	public void exitRoom(Player p, Direction d){
@@ -145,7 +149,23 @@ public class Room {
 		p.alert("You wake up in a " + _description + " room.");
 	}
 	
+	public ArrayList<Item> getItems(){
+		return _items;
+	}
+	
+	public void putItem(Item i){
+		_items.add(i);
+	}
+	
 	public ArrayList<Player> getPlayersInRoom(){
 		return _players;
+	}
+	
+	public void addOnEnterListener(OnEnterListener oel){
+		_onEntListeners.add(oel);
+	}
+	
+	public void addOnExitListener(OnExitListener oel){
+		_onExitListeners.add(oel);
 	}
 }

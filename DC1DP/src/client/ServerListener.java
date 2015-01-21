@@ -17,6 +17,10 @@ public class ServerListener implements Runnable{
 		while(true){
 			try {
 				System.out.println(_sm.readFromServer().getData());
+			
+				synchronized (_sm) {
+					_sm.notifyAll();
+				}
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -2,7 +2,7 @@ package server.commands;
 
 import server.player.Player;
 
-public interface CommandFunction {
+public interface ICommand {
 
 	public void performCommand(Player p, String[] args);
 	
