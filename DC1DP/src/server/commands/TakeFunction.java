@@ -1,7 +1,6 @@
 package server.commands;
 
 import server.cube.Room;
-import server.items.Item;
 import server.player.Player;
 
 public class TakeFunction implements ICommand{

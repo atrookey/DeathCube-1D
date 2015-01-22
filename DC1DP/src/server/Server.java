@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import server.commands.CheckInventoryFunction;
-import server.commands.ICommand;
 import server.commands.GoFunction;
 import server.commands.HelpFunction;
+import server.commands.ICommand;
 import server.commands.LookFunction;
 import server.commands.MapFunction;
 import server.commands.SayFunction;

@@ -2,20 +2,19 @@ package server.commands;
 
 import server.player.Player;
 
-public class CheckInventoryFunction implements ICommand{
+public class InspectFunction implements ICommand{
 
-	public static final String COMMAND = "CHECK";
+	public static final String COMMAND = "INSPECT";
 	
 	@Override
 	public void performCommand(Player p, String[] args) {
 		// TODO Auto-generated method stub
-		String s = p.getInventory().getListOfItems();
-		
-		if(s.equals("")){
-			p.appendToLog("Your inventory is empty!");
+		if(args.length < 2){
+			p.appendToLog("Invalid usage! Type HELP INSPECT for more info!");
 		}else{
-			p.appendToLog("The current items in your inventory:");
-			p.appendToLog(s);
+			if(p.getInventory().getItem(args[1]) != null){
+				p.appendToLog(p.getInventory().getItem(args[1]).getItemDescription());
+			}
 		}
 	}
 
@@ -28,7 +27,7 @@ public class CheckInventoryFunction implements ICommand{
 	@Override
 	public String getHelp() {
 		// TODO Auto-generated method stub
-		return "Usage: Type CHECK to check your inventory.";
+		return "Usage: INSPECT <ITEM>.";
 	}
 
 }
