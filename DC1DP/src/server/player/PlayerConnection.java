@@ -1,10 +1,11 @@
-package server;
+package server.player;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import server.Server;
 import shared.ClientPacket;
 import shared.ServerPacket;
 

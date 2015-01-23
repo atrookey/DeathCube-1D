@@ -6,12 +6,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import server.commands.CommandFunction;
+import server.commands.CheckInventoryFunction;
 import server.commands.GoFunction;
 import server.commands.HelpFunction;
+import server.commands.ICommand;
 import server.commands.LookFunction;
 import server.commands.MapFunction;
 import server.commands.SayFunction;
+import server.commands.TakeFunction;
+import server.commands.UseFunction;
+import server.cube.Cube;
+import server.player.Player;
+import server.player.PlayerConnection;
 import shared.ServerPacket;
 
 public class Server {
@@ -19,7 +25,7 @@ public class Server {
 	private ArrayList<PlayerConnection> _connectedPlayers;
 
 	private HashMap<Player, PlayerConnection> _players;
-	private HashMap<String, CommandFunction> _commands;
+	private HashMap<String, ICommand> _commands;
 	
 	private Cube _cube;
 
@@ -198,11 +204,14 @@ public class Server {
 	 * Bind commands to a map. This allows them to be easily called.
 	 * @param cmds
 	 */
-	private void registerCommands(HashMap<String, CommandFunction> cmds) {
+	private void registerCommands(HashMap<String, ICommand> cmds) {
 		cmds.put(GoFunction.COMMAND, new GoFunction());
 		cmds.put(LookFunction.COMMAND, new LookFunction());
 		cmds.put(SayFunction.COMMAND, new SayFunction());
 		cmds.put(MapFunction.COMMAND, new MapFunction(this));
+		cmds.put(TakeFunction.COMMAND, new TakeFunction());
+		cmds.put(CheckInventoryFunction.COMMAND, new CheckInventoryFunction());
+		cmds.put(UseFunction.COMMAND, new UseFunction());
 		cmds.put(HelpFunction.COMMAND, new HelpFunction(cmds));
 	}
 	

@@ -1,10 +1,12 @@
-package server;
+package server.cube;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import server.Room.Direction;
+import server.cube.Room.Direction;
+import server.items.BeeperItem;
+import server.player.Player;
 
 public class Cube {
 	/*
@@ -199,6 +201,7 @@ public class Cube {
 		}
 
 		r.placePlayer(p);
+		r.putItem(new BeeperItem());
 
 	}
 
@@ -324,7 +327,7 @@ public class Cube {
 
 	/**
 	 * Retrieve the cube. It can not be modified from outside of this method.
-	 * @return
+	 * @return the 
 	 */
 	public final Room[][][] getCube() {
 		return _cube;

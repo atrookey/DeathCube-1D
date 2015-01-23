@@ -1,51 +1,54 @@
 package server.commands;
 
-import server.Player;
-import server.Room;
-import server.Room.Direction;
+import server.cube.Room;
+import server.cube.Room.Direction;
+import server.player.Player;
 
-public class GoFunction implements CommandFunction {
+public class GoFunction implements ICommand {
 
 	public static String COMMAND = "GO";
 
 	@Override
 	public void performCommand(Player p, String[] args) {
-		// TODO Auto-generated method stub
-		Direction d = null;
-
-		switch (args[1]) {
-		case "NORTH":
-			d = Direction.north;
-			break;
-		case "SOUTH":
-			d = Direction.south;
-			break;
-		case "EAST":
-			d = Direction.east;
-			break;
-		case "WEST":
-			d = Direction.west;
-			break;
-		case "UP":
-			d = Direction.up;
-			break;
-		case "DOWN":
-			d = Direction.down;
-			break;
-		default:
-			p.appendToLog("Invalid direction!");
-			return;
-		}
-
-		Room r = p.getCurrentRoom().getRoom(d);
-
-		if (r == null) {
-			p.appendToLog("There is no room there!");
+		if (args.length < 2) {
+			p.appendToLog("You must include a direction to move in!");
 		} else {
-			p.getCurrentRoom().exitRoom(p,d);
-			
-			
-			r.enterRoom(p,getOppositeDirection(d));
+
+			Direction d = null;
+
+			switch (args[1]) {
+			case "NORTH":
+				d = Direction.north;
+				break;
+			case "SOUTH":
+				d = Direction.south;
+				break;
+			case "EAST":
+				d = Direction.east;
+				break;
+			case "WEST":
+				d = Direction.west;
+				break;
+			case "UP":
+				d = Direction.up;
+				break;
+			case "DOWN":
+				d = Direction.down;
+				break;
+			default:
+				p.appendToLog("Invalid direction!");
+				return;
+			}
+
+			Room r = p.getCurrentRoom().getRoom(d);
+
+			if (r == null) {
+				p.appendToLog("There is no room there!");
+			} else {
+				p.getCurrentRoom().exitRoom(p, d);
+
+				r.enterRoom(p, getOppositeDirection(d));
+			}
 		}
 	}
 
@@ -61,9 +64,9 @@ public class GoFunction implements CommandFunction {
 		return "type GO [DIRECTION] to go to that room. "
 				+ "Available directions: north,south,west,east,up,down.";
 	}
-	
-	public static Direction getOppositeDirection(Direction d){
-		switch(d){
+
+	public static Direction getOppositeDirection(Direction d) {
+		switch (d) {
 		case down:
 			return Direction.up;
 		case east:

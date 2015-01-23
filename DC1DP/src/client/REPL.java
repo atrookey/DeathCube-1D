@@ -21,6 +21,8 @@ public class REPL implements Runnable{
 		String line = null;
 		
 		while(true){
+			System.out.print("> ");
+			
 			line = scanner.nextLine();
 			
 			if(line.equals("quit")){
@@ -28,9 +30,15 @@ public class REPL implements Runnable{
 			}else{
 				try {
 					_sm.writeToServer(new ClientPacket(line, "GINO"));
+					
+					synchronized (_sm) {
+						_sm.wait();
+					}
 				} catch (IOException e ) {
 					System.out.println("Could not write to the server!!");
 					System.exit(-1);
+				} catch (InterruptedException e) {
+					System.err.println("interrupted!");
 				}
 			}
 		}

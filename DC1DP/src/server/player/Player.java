@@ -1,7 +1,8 @@
-package server;
+package server.player;
 
 import java.io.IOException;
 
+import server.cube.Room;
 import shared.ServerPacket;
 
 public class Player {
@@ -18,6 +19,8 @@ public class Player {
 	
 	//The connection that is serving this player. It allows for server communication.
 	private PlayerConnection _pc;
+	
+	private Inventory _myInventory;
 
 	/** 
 	 * @param name the player's name
@@ -27,6 +30,7 @@ public class Player {
 		_name = name;
 		_log = new StringBuilder();
 		_pc = pc;
+		_myInventory = new Inventory();
 	}
 
 	public void setCurrentRoom(Room r) {
@@ -83,5 +87,9 @@ public class Player {
 			e.printStackTrace();
 			System.err.println("Could not notify the player!");
 		}
+	}
+	
+	public Inventory getInventory(){
+		return _myInventory;	
 	}
 }

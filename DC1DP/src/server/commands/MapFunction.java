@@ -1,10 +1,10 @@
 package server.commands;
 
-import server.Player;
-import server.Room;
 import server.Server;
+import server.cube.Room;
+import server.player.Player;
 
-public class MapFunction implements CommandFunction {
+public class MapFunction implements ICommand {
 
 	public static String COMMAND = "MAP";
 	

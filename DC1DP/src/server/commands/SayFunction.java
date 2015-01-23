@@ -1,8 +1,8 @@
 package server.commands;
 
-import server.Player;
+import server.player.Player;
 
-public class SayFunction implements CommandFunction {
+public class SayFunction implements ICommand {
 
 	public static String COMMAND = "SAY";
 
