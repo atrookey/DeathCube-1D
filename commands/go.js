@@ -7,6 +7,10 @@ function Go(session) {
       + 'available directions: ' + directions.toString();
   }
 
+  function opposite(index) {
+    return (index % 2 == 0 ? ++index : --index);
+  }
+
   this.performCommand = function(player, args) {
     if (args.length < 2) {
       player.notify('you must include a direction to move in!');
@@ -27,15 +31,12 @@ function Go(session) {
       else if(room == null) {
         player.notify('there is no room there!');
       } else {
-        player.room.exitPlayer(player, directions[opposite(direction)]);
-        room.enterPlayer(player, directions[direction]);
+        player.room.exitPlayer(player, directions[direction]);
+        room.enterPlayer(player, directions[opposite(direction)]);
       }
     }
   }
 
-  function opposite(index) {
-    return (index % 2 == 0 ? ++index : --index);
-  }
 }
 
 module.exports = Go;

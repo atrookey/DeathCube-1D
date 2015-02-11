@@ -9,7 +9,7 @@ function Say(session) {
         player.notify('you must include a message to say!');
     } else {
         args.splice(0, 1);
-        player.room.notifyPlayers(args.join(' '));
+        player.room.notifyPlayers(player.name + ' says: ' + args.join(' '));
     }
   }
 }

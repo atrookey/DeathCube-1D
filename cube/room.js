@@ -21,14 +21,14 @@ function Room(description) {
   }
 
   this.enterPlayer = function(player, direction) {
+    this.notifyPlayers(player.name + ' just entered from ' + direction);
     this.addPlayer(player);
-    this.notifyPlayers(player + ' just entered ' + direction);
     player.notify('you entered a ' + description + ' room');
   }
 
   this.exitPlayer = function(player, direction) {
     players.removePlayer(player);
-    this.notifyPlayers(player + ' just exited ' + direction);
+    this.notifyPlayers(player.name + ' just exited ' + direction);
   }
 
   this.numberOfPlayers = function() {
