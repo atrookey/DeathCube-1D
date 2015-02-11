@@ -22,7 +22,8 @@ function Room(description) {
 
   this.enterPlayer = function(player, direction) {
     this.addPlayer(player);
-    this.notifyPlayers(player + ' just entered ' + direction);
+    // this.notifyPlayers(player + ' just entered ' + direction);
+    
     player.notify('you entered a ' + description + ' room');
   }
 

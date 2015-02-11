@@ -44,7 +44,7 @@ function PlayerList() {
   }
 
   this.forEach = function(callback) {
-    for(var i = 0; i<players.length; i++) {
+    for(var i = 0; i<players.size(); i++) {
       // need error handling
       callback(players[i]);
     }
