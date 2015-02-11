@@ -43,10 +43,9 @@ function PlayerList() {
     return players.size();
   }
 
-  this.forEach = function(callback) {
+  this.notifyPlayers = function(message) {
     for(var i = 0; i<players.size(); i++) {
-      // need error handling
-      callback(players[i]);
+      player[i].notify(message);
     }
   }
 }

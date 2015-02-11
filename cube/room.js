@@ -40,9 +40,7 @@ function Room(description) {
   }
 
   this.notifyPlayers = function(message) {
-    players.forEach(function(player) {
-      player.notify(message);
-    });
+    players.notifyPlayers(message);
   }
 
   this.getDescription = function() {
