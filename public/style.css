@@ -1,0 +1,21 @@
+* { margin: 5; padding: 0; box-sizing: border-box; }
+body { font-size: 11px; font-family: Consolas,"courier new"; color: #00ff00; background: #000000; }
+
+li {
+  white-space: pre;
+}
+
+form input { 
+  background-color: #808080;
+  border: none;
+  outline: none;
+  color: #00ff00;
+  font-size: 11px;
+  font-family: Consolas,"courier new";
+  width: 400px;
+  max-width: 95%;
+}
+
+#messages {
+  margin: 0;
+}
