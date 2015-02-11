@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 var Session = require('./session/session.js');
 var Player = require('./player/player.js');
 
+var port = var port = process.env.PORT || 5000
 var DEFAULT_EVENT_NAME = 'message';
 
 // Session creation needs to be revised
@@ -24,6 +25,6 @@ io.on('connection', function(socket){
   player.notify("You wake up in a " + room.getDescription() + " room.");
 });
 
-http.listen(3000, function(){
+http.listen(port, function(){
   console.log('listening on *:3000');
 });
