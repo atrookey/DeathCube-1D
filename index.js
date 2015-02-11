@@ -12,6 +12,7 @@ var sessions = [];
 var currentSession = new Session(io, DEFAULT_EVENT_NAME);
 sessions.push(currentSession);
 
+app.set('port', (process.env.PORT || 5000));
 app.use('/static', express.static(__dirname + '/public'));
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -24,6 +25,6 @@ io.on('connection', function(socket){
   player.notify("You wake up in a " + room.getDescription() + " room.");
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(app.get('port'), function(){
+  console.log("Node app is running at localhost:" + app.get('port'));
 });
