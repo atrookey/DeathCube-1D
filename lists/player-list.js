@@ -27,6 +27,12 @@ function PlayerList() {
     return false;
   }
 
+  players.notifyPlayers = function(message) {
+    for(var i = 0; i<players.size(); i++) {
+      this.array[i].notify(message);
+    }
+  }
+
   this.addPlayer = function(player) {
     players.add(player);
   }
@@ -44,10 +50,9 @@ function PlayerList() {
   }
 
   this.notifyPlayers = function(message) {
-    for(var i = 0; i<players.size(); i++) {
-      player[i].notify(message);
-    }
+    players.notifyPlayers(message);
   }
+
 }
 
 module.exports = PlayerList;

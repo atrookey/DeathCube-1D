@@ -8,7 +8,8 @@ function Say(session) {
     if (args.length < 2) {
         player.notify('you must include a message to say!');
     } else {
-        player.room.notifyPlayers(args[2]);
+        args.splice(0, 1);
+        player.room.notifyPlayers(args.join(' '));
     }
   }
 }
