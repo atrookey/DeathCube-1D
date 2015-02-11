@@ -5,9 +5,12 @@ function Say(session) {
   }
 
   this.performCommand = function(player, args) {
-    player.notify('Perform Say');
+    if (args.length < 2) {
+        player.notify('you must include a message to say!');
+    } else {
+        player.room.notifyPlayers(args[2]);
+    }
   }
-
 }
 
 module.exports = Say;
