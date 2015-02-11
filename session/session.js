@@ -36,4 +36,6 @@ function Session (io, eventName) {
     return parser;
   }
 
+}
+
 module.exports = Session;
