@@ -1,5 +1,5 @@
 var Cube = require('../cube/cube.js');
-var PlayerList = require('../lists/player-list.js');
+var PlayerList = require('../player/player-list.js');
 var Parser = require('../commands/parser.js');
 
 function Session (io, eventName) {

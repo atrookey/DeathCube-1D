@@ -23,11 +23,11 @@ io.on('connection', function(socket){
   var player = new Player(socket, currentSession);
   currentSession.addPlayer(player);
   var room = currentSession.getCube().placePlayer(player);
-  player.notify("You wake up in a " + room.getDescription() + " room.");
+  player.notify('You wake up in a ' + room.getDescription() + ' room.');
 });
 
 http.listen(app.get('port'), function(){
-  console.log("Node app is running at localhost:" + app.get('port'));
+  console.log('Node app is running at localhost:' + app.get('port'));
 });
 
 // TESTS, REMOVE BEFORE RELEASE

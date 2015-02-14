@@ -1,4 +1,4 @@
-var PlayerList = require('../lists/player-list.js');
+var PlayerList = require('../player/player-list.js');
 
 function Room(description) {
   var players = new PlayerList();

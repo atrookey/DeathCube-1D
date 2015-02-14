@@ -1,11 +1,18 @@
-var PlayerList = require('../lists/player-list.js');
+var express = require('express');
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var Session = require('../session/session.js');
+var PlayerList = require('../player/player-list.js');
 var Player = require('../player/player.js');
+var MockSocket = require('./mock-socket.js');
 var list1;
-var passed;
-var failed;
+var session;
 
 function setup() {
   list1 = new PlayerList();
+  session = new Session(io, 'message');
+  console.log(String(session));
 }
 
 function assert(test, expected, actual) {
@@ -15,21 +22,21 @@ function assert(test, expected, actual) {
 }
 
 function test1() {
-  // var fred = new Player();
-  // player1.name = 'fred';
-  // var george = new Player();
-  // player1.name = 'george';
-  // var alex = new Player();
-  // player1.name = 'alex';
-  // var amanda = new Player();
-  // player1.name = 'amanda';
-  // var stacia = new Player();
-  // player1.name = 'stacia';
-  // list1.add(fred);
-  // list1.add(george);
-  // list1.add(alex);
-  // list1.add(amanda);
-  // list1.add(stacia);
+  var fred = new Player(new MockSocket(1), session);
+  fred.name = 'fred';
+  var george = new Player(new MockSocket(2), session);
+  george.name = 'george';
+  var alex = new Player(new MockSocket(3), session);
+  alex.name = 'alex';
+  var amanda = new Player(new MockSocket(4), session);
+  amanda.name = 'amanda';
+  var stacia = new Player(new MockSocket(5), session);
+  stacia.name = 'stacia';
+  list1.addPlayer(fred);
+  list1.addPlayer(george);
+  list1.addPlayer(alex);
+  list1.addPlayer(amanda);
+  list1.addPlayer(stacia);
   var expected = [
     'fred',
     'george',
