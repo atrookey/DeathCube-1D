@@ -1,5 +1,5 @@
-function MockSocket (id_num) {
-  this.id = id_num;
+function MockSocket () {
+  this.id = MockSocket.nextID++;
 
   this.emit = function(event, message) {
     console.log('MockSocket ' + id + ' emmitted ' + message);
@@ -10,5 +10,7 @@ function MockSocket (id_num) {
     return;
   }
 }
+
+MockSocket.nextID = 0;
 
 module.exports = MockSocket;

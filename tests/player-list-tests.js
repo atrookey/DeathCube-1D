@@ -1,99 +1,207 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var Session = require('../session/session.js');
-var PlayerList = require('../player/player-list.js');
-var Player = require('../player/player.js');
-var MockSocket = require('./mock-socket.js');
+var PlayerList;
+var Player;
+var MockSocket;
 var list1;
 var session;
+var fred;
+var george;
+var alex;
+var amanda;
+var stacia;
 
 function setup() {
+  var express = require('express');
+  var app = express();
+  var http = require('http').Server(app);
+  var io = require('socket.io')(http);
+  var Session = require('../session/session.js');
+  PlayerList = require('../player/player-list.js');
+  Player = require('../player/player.js');
+  MockSocket = require('./mock-socket.js');
   list1 = new PlayerList();
   session = new Session(io, 'message');
-  console.log(String(session));
+  fred = new Player(new MockSocket(), session);
+  fred.name = 'fred';
+  george = new Player(new MockSocket(), session);
+  george.name = 'george';
+  alex = new Player(new MockSocket(), session);
+  alex.name = 'alex';
+  amanda = new Player(new MockSocket(), session);
+  amanda.name = 'amanda';
+  stacia = new Player(new MockSocket(), session);
+  stacia.name = 'stacia';
 }
 
 function assert(test, expected, actual) {
-  console.log(test + ' ' + String(expected == actual) + '\n' +
-    '  expected: ' + expected + '\n' + '  actual: ' + actual);
+  console.log(test + ' ' + String(expected == actual) +
+    ' EXPECTED:' + expected + ' ACTUAL:' + actual);
   return expected == actual;
 }
 
+// test the addition of new players
 function test1() {
-  var fred = new Player(new MockSocket(1), session);
-  fred.name = 'fred';
-  var george = new Player(new MockSocket(2), session);
-  george.name = 'george';
-  var alex = new Player(new MockSocket(3), session);
-  alex.name = 'alex';
-  var amanda = new Player(new MockSocket(4), session);
-  amanda.name = 'amanda';
-  var stacia = new Player(new MockSocket(5), session);
-  stacia.name = 'stacia';
   list1.addPlayer(fred);
   list1.addPlayer(george);
   list1.addPlayer(alex);
   list1.addPlayer(amanda);
   list1.addPlayer(stacia);
-  var expected = [
-    'fred',
-    'george',
-    'alex',
-    'amanda',
-    'stacia'
-  ].toString();
+  var expected = ['fred','george','alex','amanda','stacia'].toString();
   var actual = list1.toString();
-  return assert('test 1', expected, actual);
+  return assert('TEST 1', expected, actual);
 }
 
+// test the removal of players
 function test2() {
-  var expected = true;
-  var actual = false;
-  return assert('test 2', expected, actual);;
+  list1.removePlayer(george);
+  list1.removePlayer(amanda);
+  var expected = ['fred','alex','stacia'].toString();
+  var actual = list1.toString();
+  return assert('TEST 2', expected, actual);;
 }
 
+// test the contains method in a positive scenario
 function test3() {
+  var list = new PlayerList();
+  var david = new Player(new MockSocket(), session);
+  list.addPlayer(david);
   var expected = true;
-  var actual = false;
-  return assert('test 3', expected, actual);
+  var actual = list.containsPlayer(david);
+  return assert('TEST 3', expected, actual);
 }
 
+// test the contains method in a negative scenario
 function test4() {
-    var expected = true;
-  var actual = false;
-  return assert('test 4', expected, actual);
+  var list = new PlayerList();
+  var a = new Player(new MockSocket(), session);
+  list.addPlayer(a);
+  var b = new Player(new MockSocket(), session);
+  list.addPlayer(b);
+  var c = new Player(new MockSocket(), session);
+  list.addPlayer(c);
+  list.removePlayer(c);
+  var expected = false;
+  var actual = list.containsPlayer(c);
+  return assert('TEST 4', expected, actual);
 }
 
+// test the contains method for 100 items
 function test5() {
+  var list = new PlayerList();
   var expected = true;
-  var actual = false;
-  return assert('test 5', expected, actual);
+  var actual = expected;
+  for(var i = 0; i<100; i++) {
+      var a = new Player(new MockSocket(), session);
+      list.addPlayer(a);
+      var actual = actual && list.containsPlayer(a);
+  }
+  return assert('TEST 5', expected, actual);
 }
 
+// test the contains method for 1000 players
+function test6() {
+  var list = new PlayerList();
+  var expected = true;
+  var actual = expected;
+  for(var i = 0; i<1000; i++) {
+      var a = new Player(new MockSocket(), session);
+      list.addPlayer(a);
+      var actual = actual && list.containsPlayer(a);
+  }
+  return assert('TEST 6', expected, actual);
+}
+
+// test number of players
 function test7() {
-  var expected = true;
-  var actual = false;
-  return assert('test 6', expected, actual);
+  var list = new PlayerList();
+  var expected = 0;
+  var actual = list.numberOfPlayers();
+  return assert('TEST 7', expected, actual);
 }
 
+// test number of players
 function test8() {
-  var expected = true;
-  var actual = false;
-  return assert('test 7', expected, actual);
+  var list = new PlayerList();
+  var player = new Player(new MockSocket(), session);
+  list.addPlayer(player);
+  var expected = 1;
+  var actual = list.numberOfPlayers();
+  return assert('TEST 8', expected, actual);
 }
 
+// test number of players
 function test9() {
-  var expected = true;
-  var actual = false;
-  return assert('test 8', expected, actual);
+  var list = new PlayerList();
+  var a = new Player(new MockSocket(), session);
+  list.addPlayer(a);
+  var b = new Player(new MockSocket(), session);
+  list.addPlayer(b);
+  var c = new Player(new MockSocket(), session);
+  list.addPlayer(c);
+  list.removePlayer(c);
+  var expected = 2;
+  var actual = list.numberOfPlayers();
+  return assert('TEST 9', expected, actual);
 }
 
+// test number of players
 function test10() {
-  var expected = true;
-  var actual = false;
-  return assert('test 9', expected, actual);
+  var list = new PlayerList();
+  var a = new Player(new MockSocket(), session);
+  list.addPlayer(a);
+  var b = new Player(new MockSocket(), session);
+  list.addPlayer(b);
+  var c = new Player(new MockSocket(), session);
+  list.addPlayer(c);
+  list.removePlayer(c);
+  var d = new Player(new MockSocket(), session);
+  list.addPlayer(d);
+  var e = new Player(new MockSocket(), session);
+  list.addPlayer(e);
+  list.removePlayer(a);
+  var expected = 3;
+  var actual = list.numberOfPlayers();
+  return assert('TEST 10', expected, actual);
+}
+
+// test number of players up to 797
+function test11() {
+  var list = new PlayerList();
+  for(var i = 0; i<797; i++) {
+    var a = new Player(new MockSocket(), session);
+    list.addPlayer(a);
+  }
+  var expected = 797;
+  var actual = list.numberOfPlayers();
+  return assert('TEST 11', expected, actual);
+}
+
+// test number of players up to 989
+function test12() {
+  var list = new PlayerList();
+  for(var i = 0; i<989; i++) {
+    var a = new Player(new MockSocket(), session);
+    list.addPlayer(a);
+  }
+  var expected = 989;
+  var actual = list.numberOfPlayers();
+  return assert('TEST 12', expected, actual);
+}
+
+// test removal of 989 players
+function test13() {
+  var list = new PlayerList();
+  var playersToBeRemoved = [];
+  for(var i = 0; i<989; i++) {
+    var a = new Player(new MockSocket(), session);
+    list.addPlayer(a);
+    playersToBeRemoved.push(a);
+  }
+  for(var i = 0; i<playersToBeRemoved.length; i++) {
+    list.removePlayer(playersToBeRemoved[i]);
+  }
+  var expected = 0;
+  var actual = 0;
+  return assert('TEST 13', expected, actual);
 }
 
 function runTests() {
@@ -109,6 +217,9 @@ function runTests() {
   test8()  ? passed++ : failed++;
   test9()  ? passed++ : failed++;
   test10() ? passed++ : failed++;
+  test11() ? passed++ : failed++;
+  test12() ? passed++ : failed++;
+  test13() ? passed++ : failed++;
   console.log(String(passed) + ' passed / ' + String(failed) + ' failed');
   console.log('Player List Tests Done');
 }
