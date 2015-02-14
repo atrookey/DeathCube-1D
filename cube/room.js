@@ -1,9 +1,7 @@
 var PlayerList = require('../lists/player-list.js');
-var ItemList = require('../lists/item-list.js');
 
 function Room(description) {
   var players = new PlayerList();
-  var items = new ItemList();
   this.north = null;
   this.south = null;
   this.east = null;

@@ -14,6 +14,8 @@ sessions.push(currentSession);
 
 app.set('port', (process.env.PORT || 5000));
 app.use('/static', express.static(__dirname + '/public'));
+app.use('/tests', express.static(__dirname + '/tests'));
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
