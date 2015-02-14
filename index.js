@@ -14,7 +14,6 @@ sessions.push(currentSession);
 
 app.set('port', (process.env.PORT || 5000));
 app.use('/static', express.static(__dirname + '/public'));
-app.use('/tests', express.static(__dirname + '/tests'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
@@ -29,4 +28,12 @@ io.on('connection', function(socket){
 
 http.listen(app.get('port'), function(){
   console.log("Node app is running at localhost:" + app.get('port'));
+});
+
+// TESTS, REMOVE BEFORE RELEASE
+app.get('/test', function(req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('tests running...\n');
+  require('./tests/run-tests.js')();
+  console.log('\nTests Done');
 });

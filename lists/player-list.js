@@ -10,7 +10,7 @@ function PlayerList() {
     for(var i = 0; i<players.length; i++) {
       // Okay, I know this comparison is not great
       if(players[i].getPlayerConnection().getSocketID() == element.getPlayerConnection().getSocketID()) {
-        this.array.splice(i, 1);
+        players.splice(i, 1);
         return element;
       }
     }
@@ -34,6 +34,14 @@ function PlayerList() {
 
   this.numberOfPlayers = function() {
     return players.length;
+  }
+
+  this.toString = function() {
+    var playerNames = [];
+    for(var i = 0; i<players.length; i++) {
+      playerNames.push(players[i].name);
+    }
+    return playerNames.join(',');
   }
 
 }
