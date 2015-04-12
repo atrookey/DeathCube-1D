@@ -5,8 +5,7 @@ function Use(session) {
   }
 
   this.performCommand = function(player, args) {
-    session.testForEach();
-    player.notify('For Each Test Done');
+    player.notify('Perform Use');
   }
 
 }

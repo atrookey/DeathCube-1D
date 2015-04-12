@@ -45,25 +45,10 @@ function Cube (length, width, height) {
   var numberOfBlanks = (length * width * height) / 5;
   var colors = ['blue', 'green', 'yellow', 'red'];
 
-  for(var i = 0; i<length; i++) {
-    cube[i] = new Array(width);
-    for(var j = 0; j<width; j++) {
-      cube[i][j] = new Array(height);
-      for(var k = 0; k<height; k++) {
-        var blankChance = Math.floor(Math.random() * 100);
-        if(blankChance < BLANK_CHANCE && blanksMade < numberOfBlanks) {
-          cube[i][j][k] = null;
-          blanksMade++;
-        } else {
-          var r = new Room(colors[Math.floor(Math.random()*4)]);
-          cube[i][j][k] = r;
-          roomsMade++;
-        }
-      }
-    }
+  // Private Functions
+  var attemptShift = function() {
+
   }
-  console.log('roomsMade: '+roomsMade);
-  console.log('blanksMade: '+blanksMade);
 
   var connectRooms = function() {
     for(var i = 0; i<cube.length; i++) {
@@ -116,13 +101,8 @@ function Cube (length, width, height) {
     }
   }
 
-  connectRooms();
-
+  // Protected Functions
   this.shiftRooms = function() {
-
-  }
-
-  var attemptShift = function() {
 
   }
 
@@ -161,6 +141,27 @@ function Cube (length, width, height) {
     return map;
   }
 
+  // Initialization
+  for(var i = 0; i<length; i++) {
+    cube[i] = new Array(width);
+    for(var j = 0; j<width; j++) {
+      cube[i][j] = new Array(height);
+      for(var k = 0; k<height; k++) {
+        var blankChance = Math.floor(Math.random() * 100);
+        if(blankChance < BLANK_CHANCE && blanksMade < numberOfBlanks) {
+          cube[i][j][k] = null;
+          blanksMade++;
+        } else {
+          var r = new Room(colors[Math.floor(Math.random()*4)]);
+          cube[i][j][k] = r;
+          roomsMade++;
+        }
+      }
+    }
+  }
+  console.log('roomsMade: '+roomsMade);
+  console.log('blanksMade: '+blanksMade);
+  connectRooms();
 }
 
 module.exports = Cube;
